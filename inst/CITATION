@@ -1,0 +1,15 @@
+if(!exists("meta") || is.null(meta)) meta <- packageDescription("ggpt")
+citHeader("To cite package 'migration.indices' in publications, please use:")
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date)
+vers <- paste("R package version", meta$Version)
+citEntry(entry       = "Manual",
+	 title       = "migration.indices",
+	 author      = as.person("Gergely Daróczi and Lajos Bálint"),
+	 year        = year,
+	 note        = vers,
+	 url         = "http://cran.r-project.org/package=migration.indices",
+	 textVersion = paste("Daróczi, G. and Bálint, L. (",
+			     year,
+			     "). migration.indices. ",
+			     vers,
+			     ", URL http://cran.r-project.org/package=migration.indices", sep = ""))
