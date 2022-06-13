@@ -46,6 +46,7 @@ check.migration.matrix <- function(m) {
 #' migration.gini.total(migration.hyp, FALSE)    # 0.2222222
 #' migration.gini.total(migration.hyp2, FALSE)   # 0.1875
 #' @export
+#' @importFrom stats dist
 #' @seealso \code{\link{migration.gini.col}} \code{\link{migration.gini.row}} \code{\link{migration.gini.exchange}} \code{\link{migration.gini.in}} \code{\link{migration.gini.out}}
 migration.gini.total <- function(m, corrected = TRUE) {
 
@@ -83,6 +84,7 @@ migration.gini.total <- function(m, corrected = TRUE) {
 #' migration.gini.row(migration.hyp)  # 0
 #' migration.gini.row(migration.hyp2) # 0.02083333
 #' @export
+#' @importFrom stats dist
 #' @seealso \code{\link{migration.gini.col}} \code{\link{migration.gini.row.standardized}}
 migration.gini.row <- function(m) {
 
@@ -134,6 +136,7 @@ migration.gini.row.standardized <- function(m, gini.total = migration.gini.total
 #' migration.gini.col(migration.hyp)  # 0.05555556
 #' migration.gini.col(migration.hyp2) # 0.04166667
 #' @export
+#' @importFrom stats dist
 #' @seealso \code{\link{migration.gini.row}} \code{\link{migration.gini.col.standardized}}
 migration.gini.col <- function(m) {
 
@@ -243,6 +246,7 @@ migration.gini.exchange.standardized <- function(m, gini.total = migration.gini.
 #' migration.gini.out(migration.hyp, FALSE)  # 0 0 0
 #' migration.gini.out(migration.hyp2, FALSE) # 0.000 0.125 0.000
 #' @export
+#' @importFrom stats dist
 #' @seealso \code{\link{migration.gini}} \code{\link{migration.gini.in}} \code{\link{migration.weighted.gini.out}}
 migration.gini.out <- function(m, corrected = TRUE) {
 
@@ -307,6 +311,7 @@ migration.weighted.gini.out <- function(m, mgo = migration.gini.out(m)) {
 #' migration.gini.in(migration.hyp, FALSE)  # 0.1000000 0.2500000 0.1666667
 #' migration.gini.in(migration.hyp2, FALSE) # 0.1000000 0.0000000 0.2142857
 #' @export
+#' @importFrom stats dist
 #' @seealso \code{\link{migration.gini}} \code{\link{migration.gini.out}} \code{\link{migration.weighted.gini.in}}
 migration.gini.in <- function(m, corrected = TRUE) {
 
@@ -433,8 +438,7 @@ migration.gini <- function(m, corrected = TRUE) {
 }
 
 
-#' @method print migration.gini
-#' @S3method print migration.gini
+#' @export
 print.migration.gini <- function(x, ...) {
 
     cat('\n')

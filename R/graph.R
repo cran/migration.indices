@@ -8,10 +8,13 @@
 #' @param ylab label for y axis
 #' @export
 #' @references \itemize{
-#'   \item Source code was adopted from Michael Ward and Kristian Skrede Gleditsch (2008) \emph{Spatial Regression Models}. Thousand Oaks, CA: Sage. \url{http://privatewww.essex.ac.uk/~ksg/code/srm_enhanced_code_v5.R} with the permission of the authors.
+#'   \item Source code was adopted from Michael Ward and Kristian Skrede Gleditsch (2008) \emph{Spatial Regression Models}. Thousand Oaks, CA: Sage. with the permission of the authors.
 #'   \item Case study and use case: Andrei Rogers and Stuart Sweeney (1998) Measuring the Spatial Focus of Migration Patterns. \emph{The Professional Geographer} \bold{50}, 232--242
 #' }
 #' @importFrom calibrate textxy
+#' @importFrom graphics lines mtext points polygon rug text
+#' @importFrom grDevices rgb
+#' @importFrom stats resid predict coef density lm anova
 #' @examples \dontrun{
 #' data(migration.world)
 #' par(mfrow = c(2, 1))
@@ -54,6 +57,7 @@ migration.field.diagram <- function(m, method = c('gini', 'acv'), title = 'Migra
     polygon(x = c( 0,  1,  1,  0), y = c( 0,  0,  1,  1), col = 'Light Blue 3')
     polygon(x = c( 0, -1, -1,  0), y = c( 0,  0,  1,  1), col = 'Light Blue 3')
     polygon(x = c( 0,  1,  1,  0), y = c( 0,  0, -1, -1), col = 'Light Blue 3')
+    lines(c(-2.5, 2.5), c(-2.5, 2.5), lty = 2)
 
     ## model
     fit   <- lm(.in ~ .out)
@@ -61,11 +65,11 @@ migration.field.diagram <- function(m, method = c('gini', 'acv'), title = 'Migra
     ## confidence interval
     xgrid <- seq(-3, 3, length.out = 20)
     pred  <- predict(fit, data.frame(.out = xgrid), interval = 'confidence')
-    polygon(x = c(xgrid, rev(xgrid)), y=c(pred[,3], rev(pred[,2])), col = 'Light Blue 3', border = TRUE)
+    polygon(x = c(xgrid, rev(xgrid)), y=c(pred[,3], rev(pred[,2])), col = rgb(154/255, 192/255,205/255, alpha = 0.8), border = TRUE)
 
     ## points
     points(.out, .in, pch = 20)
-    textxy(.out, .in, labs = rownames(m))
+    textxy(.out, .in, labs = rownames(m), cex = 1)
 
     ## regression parameters
     rmse  <- round(sqrt(mean(resid(fit) ^ 2)), 2)
@@ -73,7 +77,8 @@ migration.field.diagram <- function(m, method = c('gini', 'acv'), title = 'Migra
     b0    <- round(coefs[1], 2)
     b1    <- round(coefs[2], 2)
     r2    <- round(summary(fit)$r.squared, 2)
-    mtext(bquote(italic(y) == .(b0) + .(b1)*italic(x) * "," ~~ r^2 == .(r2) * "," ~~ RMSE == .(rmse)), side = 3, line = 0)
+    p     <- format(anova(fit)$'Pr(>F)'[1], digits = 2)
+    mtext(bquote(italic(y) == .(b0) + .(b1)*italic(x) * "," ~~ r^2 == .(r2) * "," ~~ RMSE == .(rmse) * "," ~~ p == .(p)), side = 3, line = 0)
 
     ## densities
     sldensity <- density(.in)

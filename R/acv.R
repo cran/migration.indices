@@ -12,6 +12,7 @@
 #' migration.cv.in(migration.hyp2)   # 0.2000000 0.0000000 0.4285714
 #' }
 #' @export
+#' @importFrom stats sd
 #' @seealso \code{\link{migration.cv.out}} \code{\link{migration.acv.in}} \code{\link{migration.acv.out}} \code{\link{migration.acv}}
 migration.cv.in <- function(m) {
     diag(m) <- NA
@@ -34,6 +35,7 @@ migration.cv.in <- function(m) {
 #' migration.cv.out(migration.hyp2)   # 0.00 0.25 0.00
 #' }
 #' @export
+#' @importFrom stats sd
 #' @seealso \code{\link{migration.cv.in}} \code{\link{migration.acv.in}} \code{\link{migration.acv.out}} \code{\link{migration.acv}}
 migration.cv.out <- function(m) {
     diag(m) <- NA
